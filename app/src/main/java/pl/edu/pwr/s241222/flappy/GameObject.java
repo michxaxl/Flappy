@@ -45,6 +45,9 @@ public class GameObject extends View {
     private RectF rect;
     private int degrees;
 
+    private Boolean isPassed;
+
+
     public GameObject(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         points = 0;
@@ -76,6 +79,10 @@ public class GameObject extends View {
 
         gravity = 2;
         degrees = 0;
+
+
+        isPassed = false;
+
     }
 
     @SuppressLint("DrawAllocation")
@@ -96,21 +103,9 @@ public class GameObject extends View {
         }
 
         rect = new RectF(birdPosX-25, birdPosY-25, birdPosX+25, birdPosY+25);
-        degrees++;
-        RectF r2 = new RectF(rect);
-        Matrix mat = new Matrix();
-        mat.setRotate(degrees, r2.centerX(), r2.centerY());
-        mat.mapRect(r2);
-        //rect.contains(birdPosX-25, birdPosY-25, birdPosX+25, birdPosY+25);
+
 
         canvas.drawRect(rect, paint);
-
-        /* Jeśli znika z ekranu */
-//        if(pipePosX < -pipeSizeX) {
-//            pipePosX = displayWidth;
-//        }
-
-//        canvas.drawRect(pipePosX, pipePosY, pipePosX + pipeSizeX, pipePosY + pipeSizeY, paint);
 
 
 
@@ -121,14 +116,20 @@ public class GameObject extends View {
         pipe[0].setVelocity(pipeVelocity);
         pipe[1].setVelocity(pipeVelocity);
 
-        if(birdPosX > pipe[0].getPosX() || birdPosX > pipe[1].getPosX()){
+        if(birdPosX >= pipe[0].getPosX()-5 && !pipe[0].getPassed()){
             points++;
-//            pointsView.setText("x");
+            pointsView.setText(String.valueOf(points));
         }
+
+        if(birdPosX >= pipe[1].getPosX()-5 && !pipe[1].getPassed()){
+            points++;
+            pointsView.setText(String.valueOf(points));
+        }
+
+//        System.out.println("Pipe:"+pipe[0].getPosX()+" Bird:"+birdPosX);
 //        if(isDead()) {
 //            System.out.println("Dead");
 //        }
-
     }
 
     @Override
@@ -155,6 +156,10 @@ public class GameObject extends View {
             }
         }
         return false;
+    }
+
+    public void setPointsView(TextView pointsView) {
+        this.pointsView = (TextView)pointsView;
     }
 
     public int getPoints() {

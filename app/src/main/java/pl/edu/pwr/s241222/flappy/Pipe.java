@@ -15,6 +15,7 @@ public class Pipe {
     private float velocity;
     private int distance;
     private int displayWidth, displayHeight;
+    private Boolean isPassed;
 
     public Pipe(int sizeX, int sizeY, int displayWidth, int displayHeight, int startPosX) {
 //        this.canvas = canvas;
@@ -31,6 +32,8 @@ public class Pipe {
 
         posX = startPosX;
         posY = displayHeight/2;
+
+        isPassed = false;
 
         distance = 200;
     }
@@ -53,6 +56,11 @@ public class Pipe {
         canvas.drawRect(posX, 0, posX + sizeX, posY-distance, paint);
         canvas.drawRect(posX, posY, posX + sizeX, posY + sizeY, paint);
 
+        if(posX<displayWidth/2){
+            isPassed = true;
+        }else{
+            isPassed = false;
+        }
     }
 
     public int getSizeX() {
@@ -79,5 +87,7 @@ public class Pipe {
         return velocity;
     }
 
-
+    public Boolean getPassed() {
+        return isPassed;
+    }
 }

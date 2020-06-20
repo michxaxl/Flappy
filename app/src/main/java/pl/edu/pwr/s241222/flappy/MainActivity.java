@@ -17,11 +17,17 @@ public class MainActivity extends AppCompatActivity {
         game = findViewById(R.id.gameObject);
         pointsView = findViewById(R.id.Points);
 
+        pointsView.setText("0");
+        game.setPointsView(pointsView);
+
         if(game.isDead()){
             System.out.println("DEAD");
         }
 
+
+
+//        pointsView.setText("Hello");
 //        pointsView.setText(String.valueOf(game.getPoints()));
-        System.out.println(game.getPoints());
+//        System.out.println(game.getPoints());
     }
 }
