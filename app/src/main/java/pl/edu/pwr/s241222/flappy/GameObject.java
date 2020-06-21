@@ -53,7 +53,7 @@ public class GameObject extends View {
         points = 0;
 
         handler = new Handler();
-        background = BitmapFactory.decodeResource(getResources(),R.drawable.bg);
+//        background = BitmapFactory.decodeResource(getResources(),R.drawable.bg);
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         runnable = new Runnable() {
             @Override
@@ -71,8 +71,8 @@ public class GameObject extends View {
         birdPosY = displayHeight/2;
 
         pipe = new Pipe[2];
-        pipe[0] = new Pipe(100, displayHeight, displayWidth, displayHeight, displayWidth);
-        pipe[1] = new Pipe(100, displayHeight, displayWidth, displayHeight, displayWidth+400);
+        pipe[0] = new Pipe(68, displayHeight, displayWidth, displayHeight, displayWidth, context);
+        pipe[1] = new Pipe(68, displayHeight, displayWidth, displayHeight, displayWidth+400, context);
 
         pipe[0].setVelocity(7);
         pipe[1].setVelocity(7);
@@ -112,19 +112,24 @@ public class GameObject extends View {
         pipe[0].draw(canvas);
         pipe[1].draw(canvas);
 
-        pipeVelocity = pipe[0].getVelocity()+0.005f;
-        pipe[0].setVelocity(pipeVelocity);
-        pipe[1].setVelocity(pipeVelocity);
-
-        if(birdPosX >= pipe[0].getPosX()-5 && !pipe[0].getPassed()){
-            points++;
-            pointsView.setText(String.valueOf(points));
+        if(pipe[0].getPassed() || pipe[1].getPassed()) {
+            pipe[0].setVelocity(pipe[0].getVelocity() + 0.005f);
+            pipe[1].setVelocity(pipe[1].getVelocity() + 0.005f);
         }
 
-        if(birdPosX >= pipe[1].getPosX()-5 && !pipe[1].getPassed()){
-            points++;
-            pointsView.setText(String.valueOf(points));
+
+        for(int i=0; i<2; i++){
+            if(birdPosX >= pipe[i].getPosX()-5 && !pipe[i].getPassed() && birdPosY > pipe[i].getPosY()-pipe[i].getDistance() && birdPosY < pipe[i].getPosY()-50){
+                points++;
+                pointsView.setText(String.valueOf(points));
+            }
         }
+
+
+//        if(birdPosX >= pipe[1].getPosX()-5 && !pipe[1].getPassed()){
+//            points++;
+//            pointsView.setText(String.valueOf(points));
+//        }
 
 //        System.out.println("Pipe:"+pipe[0].getPosX()+" Bird:"+birdPosX);
 //        if(isDead()) {

@@ -1,14 +1,23 @@
 package pl.edu.pwr.s241222.flappy;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Path;
 
 import java.util.Random;
+
 
 public class Pipe {
 
     private Canvas canvas;
+    private Matrix pipeMatrix;
+    private Bitmap pipeImg, pipeImgRotated;
     private Paint paint;
     private int sizeX, sizeY;
     private int posX, posY;
@@ -16,8 +25,9 @@ public class Pipe {
     private int distance;
     private int displayWidth, displayHeight;
     private Boolean isPassed;
+    private Context appContext;
 
-    public Pipe(int sizeX, int sizeY, int displayWidth, int displayHeight, int startPosX) {
+    public Pipe(int sizeX, int sizeY, int displayWidth, int displayHeight, int startPosX, Context context) {
 //        this.canvas = canvas;
         this.sizeX = sizeX;
         this.sizeY = sizeY;
@@ -33,6 +43,13 @@ public class Pipe {
         posX = startPosX;
         posY = displayHeight/2;
 
+        pipeImg = BitmapFactory.decodeResource(context.getResources(),R.drawable.pipe);
+
+        Matrix matrix = new Matrix();
+        matrix.postRotate(180);
+        matrix.preScale(-1, 1);
+        pipeImgRotated = Bitmap.createBitmap(pipeImg, 0, 0, pipeImg.getWidth(), pipeImg.getHeight(), matrix, true);
+
         isPassed = false;
 
         distance = 200;
@@ -45,7 +62,7 @@ public class Pipe {
     public void draw(Canvas canvas) {
 
         posX -= velocity;
-        if(posX < -sizeX) {
+        if(posX+pipeImg.getWidth() < -sizeX) {
             if(velocity < 10) {
                 posY = new Random().nextInt(displayHeight/2 - distance * 2) + distance * 2;
             }else{
@@ -53,8 +70,10 @@ public class Pipe {
             }
             posX = canvas.getWidth();
         }
-        canvas.drawRect(posX, 0, posX + sizeX, posY-distance, paint);
-        canvas.drawRect(posX, posY, posX + sizeX, posY + sizeY, paint);
+
+
+        canvas.drawBitmap(pipeImg,posX,posY,paint);
+        canvas.drawBitmap(pipeImgRotated, posX, -pipeImg.getHeight()+posY-distance, paint);
 
         if(posX<displayWidth/2){
             isPassed = true;
