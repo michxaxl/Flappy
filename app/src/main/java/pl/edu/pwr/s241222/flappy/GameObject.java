@@ -13,6 +13,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.RectF;
+import android.os.Message;
 import android.util.AttributeSet;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -24,11 +25,12 @@ import androidx.annotation.Nullable;
 
 public class GameObject extends View {
 
+    private Handler handler;
+
     private TextView pointsView;
     private int points;
     private Runnable runnable;
     private Bitmap background;
-    private Handler handler;
     private Paint paint;
     private int displayWidth, displayHeight;
     private int birdPosX, birdPosY;
@@ -94,6 +96,13 @@ public class GameObject extends View {
         displayHeight = canvas.getHeight();
 
 
+        if(isDead()) {
+            handler.sendEmptyMessage(points); // Wyslanie punktow do Activity
+            return;
+        }
+
+
+
         paint.setColor(Color.rgb(200,10,0));
 //        canvas.drawBitmap(background,0,0,paint);
         handler.postDelayed(runnable, 30);
@@ -149,18 +158,20 @@ public class GameObject extends View {
 
     /* Sprawdza czy uderzono w rure */
     public boolean isDead() {
-//        for(){} // TODO: Petla dla kazdej rury
-        int pipePosX = pipe[0].getPosX();
-        int pipePosY = pipe[0].getPosY();
-        int pipeSizeX = pipe[0].getSizeX();
-        int pipeSizeY = pipe[0].getSizeY();
-        int pipeDistance = pipe[0].getDistance();
+        for(int i=0; i<2; i++) {
+            int pipePosX = pipe[i].getPosX();
+            int pipePosY = pipe[i].getPosY();
+            int pipeSizeX = pipe[i].getSizeX();
+            int pipeSizeY = pipe[i].getSizeY();
+            int pipeDistance = pipe[i].getDistance();
 
-        if((birdPosX >= pipePosX && birdPosX <= pipePosX+pipeSizeX)){
-            if((birdPosY >= pipePosY && birdPosY <= pipePosY+pipeSizeY) || (birdPosY <= pipePosY-pipeDistance)){
+            if ((birdPosX >= pipePosX && birdPosX <= pipePosX + pipeSizeX)) {
+                if ((birdPosY >= pipePosY && birdPosY <= pipePosY + pipeSizeY) || (birdPosY <= pipePosY - pipeDistance)) {
 
-                return true;
+                    return true;
+                }
             }
+
         }
         return false;
     }
@@ -171,5 +182,9 @@ public class GameObject extends View {
 
     public int getPoints() {
         return points;
+    }
+
+    public void setHandler(Handler handler) {
+        this.handler = handler;
     }
 }
