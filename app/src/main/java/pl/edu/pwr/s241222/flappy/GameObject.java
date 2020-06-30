@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -157,6 +158,7 @@ public class GameObject extends View {
 
         if((birdPosX >= pipePosX && birdPosX <= pipePosX+pipeSizeX)){
             if((birdPosY >= pipePosY && birdPosY <= pipePosY+pipeSizeY) || (birdPosY <= pipePosY-pipeDistance)){
+
                 return true;
             }
         }

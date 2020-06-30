@@ -2,6 +2,7 @@ package pl.edu.pwr.s241222.flappy;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -21,8 +22,11 @@ public class MainActivity extends AppCompatActivity {
         game.setPointsView(pointsView);
 
         if(game.isDead()){
-            System.out.println("DEAD");
+//            System.out.println("DEAD");
         }
+
+//        Intent intent = new Intent(MainActivity.this, Menu.class);
+//        startActivity(intent);
 
 
 
