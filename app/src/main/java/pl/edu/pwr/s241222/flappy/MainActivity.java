@@ -43,18 +43,7 @@ public class MainActivity extends AppCompatActivity {
         pointsView.setText("0");
         game.setPointsView(pointsView);
 
-        if(game.isDead()){
-//            System.out.println("DEAD");
-        }
 
-//        Intent intent = new Intent(MainActivity.this, Menu.class);
-//        startActivity(intent);
-
-
-
-//        pointsView.setText("Hello");
-//        pointsView.setText(String.valueOf(game.getPoints()));
-//        System.out.println(game.getPoints());
     }
 
     /* Zapisanie punktow do Preferences */

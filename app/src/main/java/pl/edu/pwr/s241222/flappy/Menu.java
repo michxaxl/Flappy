@@ -29,6 +29,7 @@ public class Menu extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+
         preferences = getSharedPreferences(PREFERENCES_NAME, Activity.MODE_PRIVATE);
 
         startBtn = findViewById(R.id.startButton);
@@ -57,8 +58,8 @@ public class Menu extends AppCompatActivity  {
         pointsFromPreferences = preferences.getInt("points", 0);
         bestPointsFromPreferences = preferences.getInt("bestPoints", 0);
 
-        lastScoreText.setText("Last Score: " + String.valueOf(pointsFromPreferences));
-        bestScoreText.setText("Best Score: " + String.valueOf(bestPointsFromPreferences));
+        lastScoreText.setText("Ostatni Wynik: " + String.valueOf(pointsFromPreferences));
+        bestScoreText.setText("Najlepszy Wynik: " + String.valueOf(bestPointsFromPreferences));
     }
 
     public void resetPoints() {
@@ -75,4 +76,5 @@ public class Menu extends AppCompatActivity  {
         super.onResume();
         restoreData();
     }
+
 }

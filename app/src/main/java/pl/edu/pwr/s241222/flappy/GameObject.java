@@ -105,6 +105,7 @@ public class GameObject extends View {
 
         paint.setColor(Color.rgb(200,10,0));
 //        canvas.drawBitmap(background,0,0,paint);
+//        canvas.drawRect(0, 0, displayWidth,displayHeight, paint);
         handler.postDelayed(runnable, 30);
 
         if(birdPosY < displayHeight-25 || velocity < 0) {
@@ -135,16 +136,6 @@ public class GameObject extends View {
             }
         }
 
-
-//        if(birdPosX >= pipe[1].getPosX()-5 && !pipe[1].getPassed()){
-//            points++;
-//            pointsView.setText(String.valueOf(points));
-//        }
-
-//        System.out.println("Pipe:"+pipe[0].getPosX()+" Bird:"+birdPosX);
-//        if(isDead()) {
-//            System.out.println("Dead");
-//        }
     }
 
     @Override
